@@ -1,0 +1,13 @@
+services:
+  jogo-service:
+    build: ../jogo
+    environment:
+      SERVER_PORT: 8081
+      DB_URL: jdbc:postgresql://postgres:5435/critical_hit?currentSchema=jogo
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    ports:
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
