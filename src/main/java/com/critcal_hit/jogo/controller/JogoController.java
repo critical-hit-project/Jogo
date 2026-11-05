@@ -25,9 +25,14 @@ public class JogoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(jogoService.cadastrar(request));
     }
 
-    @PatchMapping("/{id}/habilitar")
-    public ResponseEntity<JogoResponse> habilitar(@PathVariable Long id) {
-        return ResponseEntity.ok(jogoService.habilitar(id));
+    @PatchMapping("/{id}")
+    public ResponseEntity<JogoResponse> editar(@Valid @RequestBody JogoRequest request,@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(jogoService.editar(request,id));
+    }
+
+    @PatchMapping("/{id}/alterarStatus")
+    public ResponseEntity<JogoResponse> alterarStatus(@PathVariable Long id) {
+        return ResponseEntity.ok(jogoService.alterarStatus(id));
     }
 
     @GetMapping("/{id}")

@@ -33,11 +33,24 @@ public class JogoService {
     }
 
     @Transactional
-    public JogoResponse habilitar(Long id) {
+    public JogoResponse editar(JogoRequest request, Long id) {
+        Jogo jogo = jogoRepository.findById(id).orElseThrow(() ->
+                new JogoNaoEncontradoException("Jogo não encontrado"));
+
+        jogo.setNome(request.nome());
+        jogo.setGenero(request.genero());
+        jogo.setDescricao(request.descricao());
+        jogo.setPreco(request.preco());
+
+        return toResponse(jogo);
+    }
+
+    @Transactional
+    public JogoResponse alterarStatus(Long id) {
         Jogo jogo = jogoRepository.findById(id)
                 .orElseThrow(() -> new JogoNaoEncontradoException("Jogo não encontrado com ID: " + id));
 
-        jogo.setHabilitado(true);
+        jogo.setHabilitado(!jogo.getHabilitado());
         return toResponse(jogoRepository.save(jogo));
     }
 
